@@ -3,17 +3,19 @@ var gameRow = "<div class='container'>    <div class='container'><div class='row
 
 function createRow(){
 $("#game").append(gameRow);
-}
+};
 
 function IndCard(points, color){
   this.points = points;
   this.color = color;
-}
-
+};
 
 function MemoryGame(){
   this.gameCards = [];
   this.selectedCards = [];
+  this.selectedPoints = [];
+  this.gamePoints = 0;
+  this.selectedDivs = [];
   // this.createNewCardSet();
   }
 MemoryGame.prototype.createNewPair = function()
@@ -65,7 +67,7 @@ MemoryGame.prototype.createNewPair = function()
 MemoryGame.prototype.whichDifficulty = function(that){
 
   if ($(that).attr("id") === "easy"){
-    console.log("easy");
+    // console.log("easy");
     this.unlockEasyRows();
     for (var i = 0; i < 6; i ++ ){
       this.createNewPair();
@@ -74,13 +76,13 @@ MemoryGame.prototype.whichDifficulty = function(that){
 
   }
    else if ($(that).attr("id") === "medium"){
-    console.log("medium");
+    // console.log("medium");
     this.unlockMediumRows();
   for (var i = 0; i < 10; i ++ ){
     this.createNewPair();
   }
 } else if ($(that).attr("id")==="hard") {
-    console.log("hard");
+    // console.log("hard");
     this.unlockHardRows();
   for (var i = 0; i < 12; i ++ ){
     this.createNewPair();
@@ -91,90 +93,60 @@ MemoryGame.prototype.whichDifficulty = function(that){
 $("#diff").remove();
 $(".scoreCard").toggleClass("invisible");
 };
-
+// ========SETS DIV COLOR TO COLOR OF ITEM IN INDEX====
 MemoryGame.prototype.idToIndex = function(thy) {
   var thisId = $(thy).attr("id");
   // console.log(thisId);
   var array = thisId.split("tile");
   var index = array[1];
   var indexToNum = Number(index);
-  $(thy).css("background-color", newGame.gameCards[indexToNum].color);
-}
-//
-// MemoryGame.prototype.pointsToHtml = function(thy) {
-//   var thisId = $(thy).attr("id");
-//   console.log(thisId);
-//   var array = thisId.split("tile");
-//   var index = array[1];
-//   var indexToNum = Number(index);
-//   $(thy).html(newGame.gameCards[indexToNum].points);
-// find points, per click subtract points
-// }
+  $(thy).css("background", newGame.gameCards[indexToNum].color);
+};
+// =======================================================================
 
 MemoryGame.prototype.selectCards = function(thy) {
   var selectedId = $(thy).attr("id");
-  console.log(selectedId);
+  // console.log(selectedId);
   var selectedIdArray = selectedId.split("tile");
-  console.log(selectedIdArray);
+  // console.log(selectedIdArray);
   var selectedIndex = selectedIdArray[1];
-  console.log(selectedIndex);
-  this.selectedCards.push(selectedIndex);
+  // console.log(selectedIndex);
+  this.selectedCards.push(newGame.gameCards[selectedIndex]);
   console.log(this.selectedCards);
+  this.selectedPoints.push(newGame.gameCards[selectedIndex].points);
+  console.log(this.selectedPoints);
+  this.selectedDivs.push(thy);
+  console.log("==========================="+this.selectedDivs);
   // $(thy).css("background-color", newGame.gameCards[indexToNum].color);
-}
+};
 
-MemoryGame.prototype.calculatePoints = function (){
-  var pointsId = $(thy).attr("id");
-  var pointsIdArray = pointsId.split("tile");
-  var pointsIndex = selectedPoints
+MemoryGame.prototype.reduce = function(a,b){
+this.gamePoints = this.selectedPoints.reduce(function(a,b){
+  return a + b;
+}, this.gamePoints);
+$(".actualScore").html(this.gamePoints);
+};
 
-}
+MemoryGame.prototype.clearTileColor = function () {
+  $(this.selectedDivs[0]).attr("style", "background-color: ");
+  $(this.selectedDivs[1]).css("style", "background-color: ");
+};
 
-//
-// function createNewCardSet () {
-//   var letters = '0123456789ABCDEF';
-//   var color = '#';
-//   for (var i = 0; i < 6; i++) {
-//     color += letters[Math.floor(Math.random() * 16)];
-//   }
-//   var card = new IndCard(color)
-//   gameCards.push(card);
-//   }
+MemoryGame.prototype.resetArrays = function () {
+  this.selectedCards = [];
+  this.selectedPoints = [];
+  this.selectedDivs = [];
+  console.log(this.selectedCards);
+  console.log(this.selectedPoints);
+};
 
-
-
-
-//
-// function whichDifficulty(that){
-//   if ($(that).attr("id") === "easy"){
-//     console.log("easy");
-//     for (var i = 0; i < 3; i++) {
-//         createRow();
-//     }
-//     for (var i = 0; i < 6; i ++ ){
-//       createNewCardSet();
-//     }
-//   }
-//    else if ($(that).attr("id") === "medium"){
-//     console.log("medium");
-//     for (var i = 0; i < 5; i++) {
-//         createRow();
-//   }
-//   for (var i = 0; i < 10; i ++ ){
-//     createNewCardSet();
-//   }
-// } else if ($(that).attr("id")==="hard") {
-//     console.log("hard");
-//     for (var i = 0; i < 6; i++) {
-//         createRow();
-//   }
-//   for (var i = 0; i < 12; i ++ ){
-//     createNewCardSet();
-//   }
-// }
-// $("#diff").remove();
-// $(".scoreCard").toggleClass("invisible");
+// MemoryGame.prototype.subtractPoint = function (thy, thy2) {
+//   newGame.selectedCards[0].points --;
+//   $(thy).html(this.selectedCards[0].points);
+//   newGame.selectedCards[1].points --;
+//   $(thy2).html(this.selectedCards[1].points);
 // };
+//
 
 var newGame = "";
 
@@ -186,43 +158,49 @@ var newGame = "";
 $(document).ready(function(){
 
 var click = 0;
+// =====================NEW GAME START=================================================
 $("div.col-xs-12.cntr").on("click", function(){
   click +=1
   if (click === 1) {
-  var that = this
-
-  // $("#diff").remove();
-  // $(".scoreCard").removeClass("invisible");
+  var that = this;
   newGame = new MemoryGame;
   newGame.whichDifficulty(that);
   newGame.shuffle();
+  $(".actualScore").html(newGame.gamePoints);
+
 } else if (click > 1) {
   console.log("something");
-}
-
+};
 })
-
+// ==================NEW GAME END========================================================
 var tileClicks = 0
 
 $(".eachCard").on("click", function(){
   tileClicks = tileClicks + 1;
-  console.log(tileClicks);
-  var thy = $(this);
+  var thy = this;
   newGame.idToIndex(thy);
   newGame.selectCards(thy);
 
 if(tileClicks === 2){
-  if(newGame.selectedCards[0].color === newGame.selectedCards[1].color)
-
+  if(newGame.selectedCards[0].color === newGame.selectedCards[1].color) {
+    console.log("match");
+    newGame.reduce(newGame.selectedCards[0].points, newGame.selectedCards[1].points);
+    newGame.resetArrays();
+    tileClicks = 0;
 
 }
-else if(newGame.selectedCards[0].color != newGame.selectedCards[1].color)
+else if(newGame.selectedCards[0].color !== newGame.selectedCards[1].color){
+    // newGame.subtractPoint(thy, thy2);
+    newGame.resetArrays();
+    newGame.clearTileColor();
+    // newGame.clearTileColor(thy, thy2);
+    tileClicks = 0;
+
+};
   // newGame.pointsToHtml(thy);
   // newGame.pushToSelected(thy);
-
-
+  }
 })
-
 
 
 
