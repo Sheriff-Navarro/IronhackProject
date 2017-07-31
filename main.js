@@ -101,25 +101,20 @@ MemoryGame.prototype.idToIndex = function(thy) {
   var index = array[1];
   var indexToNum = Number(index);
   $(thy).css("background", newGame.gameCards[indexToNum].color);
-  this.selectedDivs.push($(thy).css("background", newGame.gameCards[indexToNum].color));
-  console.log(this.selectedDivs);
+  this.selectedDivs.push($(thy));
+  // console.log(this.selectedDivs);
 };
 // =======================================================================
 
 MemoryGame.prototype.selectCards = function(thy) {
   var selectedId = $(thy).attr("id");
-  // console.log(selectedId);
   var selectedIdArray = selectedId.split("tile");
-  // console.log(selectedIdArray);
   var selectedIndex = selectedIdArray[1];
-  // console.log(selectedIndex);
   this.selectedCards.push(newGame.gameCards[selectedIndex]);
   console.log(this.selectedCards);
   this.selectedPoints.push(newGame.gameCards[selectedIndex].points);
   console.log(this.selectedPoints);
-  // this.selectedDivs.push(thy);
-  // console.log("==========================="+this.selectedDivs);
-  // $(thy).css("background-color", newGame.gameCards[indexToNum].color);
+
 };
 
 MemoryGame.prototype.reduce = function(a,b){
@@ -129,9 +124,19 @@ this.gamePoints = this.selectedPoints.reduce(function(a,b){
 $(".actualScore").html(this.gamePoints);
 };
 
+MemoryGame.prototype.subtractPoint = function () {
+  this.selectedCards[0].points --;
+  console.log(this.selectedCards[0].points);
+  $(this.selectedDivs[0]).html(this.selectedCards[0].points);
+  this.selectedCards[1].points --;
+    $(this.selectedDivs[1]).html(this.selectedCards[1].points);
+  console.log(this.selectedCards[1].points);
+
+
+};
 MemoryGame.prototype.clearTileColor = function () {
-  $(this.selectedDivs[0]).css("style", "background-color: ");
-  $(this.selectedDivs[1]).css("style", "background-color: ");
+  $(this.selectedDivs[0]).css("background-color", "");
+  $(this.selectedDivs[1]).css("background-color", "");
 };
 
 MemoryGame.prototype.resetArrays = function () {
@@ -140,13 +145,7 @@ MemoryGame.prototype.resetArrays = function () {
   this.selectedDivs = [];
 };
 
-// MemoryGame.prototype.subtractPoint = function (thy, thy2) {
-//   newGame.selectedCards[0].points --;
-//   $(thy).html(this.selectedCards[0].points);
-//   newGame.selectedCards[1].points --;
-//   $(thy2).html(this.selectedCards[1].points);
-// };
-//
+
 
 var newGame = "";
 
@@ -172,7 +171,7 @@ $("div.col-xs-12.cntr").on("click", function(){
   console.log("something");
 };
 })
-// ==================NEW GAME END========================================================
+// ==================NEW GAME========================================================
 var tileClicks = 0
 
 $(".eachCard").on("click", function(){
@@ -190,10 +189,9 @@ if(tileClicks === 2){
 
 }
 else if(newGame.selectedCards[0].color !== newGame.selectedCards[1].color){
-    // newGame.subtractPoint(thy, thy2);
-    newGame.resetArrays();
+    newGame.subtractPoint();
     newGame.clearTileColor();
-    // newGame.clearTileColor(thy, thy2);
+    newGame.resetArrays();
     tileClicks = 0;
 
 };
