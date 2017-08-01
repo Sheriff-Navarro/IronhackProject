@@ -33,13 +33,19 @@ padding: 0;
 border: 2px solid rgba(255,255,255, .5);
 margin: 5px;
 padding: 25px 0px;
+font-size: 20px;
 }
 
 .eachCard:hover{
   margin:2px 0 0 0;
   background-color: white;
   color: rgb(168, 122, 30);
-  font-size: 20px;
+  font-size: 22px;
+}
+
+.selected{
+  margin:2px 0 0 0;
+
 }
 
 .cntr{
@@ -72,4 +78,8 @@ div.col-xs-12.cntr:hover{
 
 .invisible{
   visibility: hidden;
+}
+
+.blocked {
+  pointer-events: none;
 }
