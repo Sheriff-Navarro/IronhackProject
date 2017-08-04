@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MTCH</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Cuprum|Play" rel="stylesheet">
+    <link rel="stylesheet" href="master.css">
+  </head>
+  <body>
+  <div class="container scoreCard invisible" id="scoreCard">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="col-xs-12 cntr" id="start">
+              START GAME
+              <span class="glyphicon glyphicon-repeat"></span>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="col-xs-12" id="points">
+              <span id="scale" class="glyphicon glyphicon-scale"></span>
+              <span class="actualScore">#</span>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="col-xs-12" id="timeCard">
+              <span id="score" class="glyphicon glyphicon-user"></span>
+              <span class="p1Score">#</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+    <div class="container difficulty" id="diff">
+      <div class="row">
+        <div class="col-xs-12 btns">
+          <div class="row">
+          <div class="col-xs-4 ">
+            <div class="col-xs-12 cntr" id="easy">
+              EASY
+              <span class="glyphicon glyphicon-sunglasses ctr"></span>
+            </div>
+          </div>
+          <div class="col-xs-4 ">
+            <div class="col-xs-12 cntr" id="medium">
+              MEDIUM
+              <span class="glyphicon glyphicon-fire ctr"></span>
+            </div>
+          </div>
+          <div class="col-xs-4 ">
+            <div class="col-xs-12 cntr" id="hard">
+              HARD
+              <span class="glyphicon glyphicon-education ctr"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+
+
+
+<div class="container-fluid" id="game">
+
+<div class="container invisible" id="easyGame1">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="col-xs-3 ">
+            <div class="eachCard col-centered" id="tile0">10</div>
+          </div>
+          <div class="col-xs-3">
+            <div class="eachCard col-centered" id="tile1">10</div>
+          </div>
+          <div class="col-xs-3">
+            <div class="eachCard col-centered" id="tile2">10</div>
+          </div>
+          <div class="col-xs-3">
+            <div class="eachCard col-centered" id="tile3">10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container invisible" id="easyGame2">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="col-xs-3 ">
+              <div class="eachCard col-centered" id="tile4">10</div>
+            </div>
+            <div class="col-xs-3">
+              <div class="eachCard col-centered" id="tile5">10</div>
+            </div>
+            <div class="col-xs-3">
+              <div class="eachCard col-centered" id="tile6">10</div>
+            </div>
+            <div class="col-xs-3">
+              <div class="eachCard col-centered" id="tile7">10</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container invisible" id="easyGame3">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="col-xs-3 ">
+                <div class="eachCard col-centered" id="tile8">10</div>
+              </div>
+              <div class="col-xs-3">
+                <div class="eachCard col-centered" id="tile9">10</div>
+              </div>
+              <div class="col-xs-3">
+                <div class="eachCard col-centered" id="tile10">10</div>
+              </div>
+              <div class="col-xs-3">
+                <div class="eachCard col-centered" id="tile11">10</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container invisible" id="mediumGame4">
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="col-xs-3 ">
+                  <div class="eachCard col-centered" id="tile12">10</div>
+                </div>
+                <div class="col-xs-3">
+                  <div class="eachCard col-centered" id="tile13">10</div>
+                </div>
+                <div class="col-xs-3">
+                  <div class="eachCard col-centered" id="tile14">10</div>
+                </div>
+                <div class="col-xs-3">
+                  <div class="eachCard col-centered" id="tile15">10</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container invisible" id="mediumGame5">
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="col-xs-3 ">
+                    <div class="eachCard col-centered" id="tile16">10</div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div class="eachCard col-centered" id="tile17">10</div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div class="eachCard col-centered" id="tile18">10</div>
+                  </div>
+                  <div class="col-xs-3">
+                    <div class="eachCard col-centered" id="tile19">10</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container invisible" id="hardGame6">
+              <div class="container">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="col-xs-3 ">
+                      <div class="eachCard col-centered" id="tile20">10</div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="eachCard col-centered" id="tile21">10</div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="eachCard col-centered" id="tile22">10</div>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="eachCard col-centered" id="tile23">10</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container invisible" id="roundOver">
+              <div class="row">
+                    <div class="row ">
+                          <div class="col-xs-2">
+                          </div>
+                          <div class="col-xs-8 ≈" id="roundScoreCard">
+                          <div class="col-xs-12 " id="scrHd">
+                            <h1>SCORECARD</h1>
+                          </div>
+                        <div class="row">
+                          <div class="col-xs-12" id="plyrScore">
+                            <span class="glyphicon glyphicon-user ctr player" ></span>
+                            <span class = "p1"> Player 1: </span>
+
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12" id="plyrScore">
+                            <span class="glyphicon glyphicon-user ctr player"></span>
+                            <span class = "p2"> Player 2: </span>
+
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-3"></div>
+                          <div class="col-xs-6">
+                            <div class="col-xs-12 cntr" id="start2">
+                              Player 2 Turn
+                              <span class="glyphicon glyphicon-repeat"></span>
+                            </div>
+                          </div>
+                          <div class="col-xs-3"></div>
+                        </div>
+                      </div>
+                      <div class="col-xs-2">
+                      </div>
+                  </div>
+           </div>
+        </div>
+
+
+
+
+</div>
+
+
+
+  </body>
+</html>

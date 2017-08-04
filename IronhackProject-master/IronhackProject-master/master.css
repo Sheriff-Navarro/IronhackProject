@@ -1,0 +1,123 @@
+body {
+  background:url("images/background.jpg")no-repeat;
+  background-size: cover;
+  padding: 0;
+  margin: 0;
+  color: white;
+  /*font-family: 'Play', sans-serif;*/
+  font-family: 'Cuprum', sans-serif;
+  letter-spacing: 1px;
+
+}
+
+#diff{
+  margin-top: 9%;
+}
+/*.col-xs-1{
+  border: 2px solid rgba(255,255,255, .5);
+  border-radius: 3px;
+}*/
+
+.col-xs-3{
+text-align: center;;
+margin-bottom: 15px 0;
+padding: 0;
+}
+
+.whole{
+  border: 2px solid rgba(255,255,255, .5);
+  border-radius: 3px;
+}
+
+.eachCard {
+border: 2px solid rgba(255,255,255, .5);
+margin: 5px;
+padding: 25px 0px;
+font-size: 20px;
+}
+
+.eachCard:hover{
+  margin:2px 0 0 0;
+  background-color: white;
+  color: rgb(168, 122, 30);
+  font-size: 22px;
+  box-shadow: 3px 3px 3px #888888;
+/*#888888;*/
+}
+
+.selected{
+  margin:2px 0 0 0;
+
+}
+
+.cntr{
+  color: white ;
+  text-align: center;
+  border: 2px solid rgba(255,255,255, .5);
+  padding: 20px 0px;
+  font-size: 25px;
+}
+
+span .cntr{
+/*font-size: 15px*/
+}
+
+div.col-xs-12.cntr:hover{
+  background-color: white;
+  color: rgb(168, 122, 30);
+  box-shadow: 3px 3px 3px #888888;
+
+}
+
+.scoreCard{
+  margin-top: 5%;
+}
+
+#points, #timeCard{
+  color: white ;
+  text-align: center;
+  padding: 20px 0px;
+  font-size: 40px;
+}
+
+.invisible{
+  visibility: hidden;
+}
+
+.blocked {
+  pointer-events: none;
+}
+
+.help{
+  border: 2px solid rgba(255,255,255, .5);
+}
+#roundOver{
+position: relative;
+bottom: 500px;
+}
+
+
+#scrHd {
+  text-align: center;
+}
+
+#roundScoreCard {
+  /*background-color: white;*/
+  border: 2px solid rgba(255,255,255, .5);
+  /*opacity: .7;*/
+  border-radius: 5px;
+}
+
+#plyrScore{
+  font-size: 50px;
+  margin: 10px 10px 40px 0px;
+}
+
+
+
+#start2{
+  /*background-color: rgb(168, 122, 30);
+  color: white;*/
+  font-size: 30px;
+  margin-bottom: 25px;
+}
