@@ -277,6 +277,10 @@ MemoryGame.prototype.pointerOnAll = function () {
   $(".eachCard.col-centered.blocked").removeClass("blocked");
   };
 
+  MemoryGame.prototype.pointerOffAll = function () {
+    $(".eachCard.col-centered").addClass("blocked");
+  };
+
 MemoryGame.prototype.hideP2Turn = function () {
   $("#start2").addClass("invisible");
 };
@@ -326,6 +330,17 @@ MemoryGame.prototype.pushMatchedDivs = function (i) {
   this.blockMatchedDivs.push(this.selectedDivs[0]);
   this.blockMatchedDivs.push(this.selectedDivs[1]);
 };
+
+
+MemoryGame.prototype.noThirdClicks = function () {
+  newGame.pointerOffAll();
+setTimeout(function(){
+  newGame.pointerOnAll();
+  newGame.blockDivs();
+},1000);
+
+
+};
 // ====================================================================
 
 
@@ -360,19 +375,28 @@ $(".eachCard").on("click", function(){
   newGame.pointerOff(0);
 if(tileClicks === 2){
   if(newGame.selectedCards[0].color === newGame.selectedCards[1].color) {
+    newGame.pushMatchedDivs();
+    // newGame.pointerOffAll();
+    // newGame.pushMatchedDivs();
+    // setTimeout(function(){
+    newGame.noThirdClicks();
     console.log("match");
     newGame.reduce(newGame.selectedCards[0].points, newGame.selectedCards[1].points);
-    newGame.pointerOff(1);
+    // newGame.pointerOff(1);
     newGame.resetArrays();
     tileClicks = 0;
+    // newGame.pointerOnAll();
+    // newGame.blockDivs();
     // pairsMatched +=1;
-
+    // },1000)
 }
 else if(newGame.selectedCards[0].color !== newGame.selectedCards[1].color){
-    newGame.pointerOff(1);
+  newGame.noThirdClicks();
+
+    // newGame.pointerOff(1);
   setTimeout(function(){
-    newGame.pointerOn(0);
-    newGame.pointerOn(1);
+    // newGame.pointerOn(0);
+    // newGame.pointerOn(1);
     newGame.clearTileColor();
     newGame.subtractPoint();
     newGame.resetArrays();
@@ -393,7 +417,7 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   $(".scoreCard").addClass("invisible");
   newGame.showRoundOverCard();
   newGame.p1Score();
-  //NEED TO SHUFFLE THE ARRAY
+  newGame.blockMatchedDivs = [];
   alert("FINALLY! You're score is " + newGame.player1score);
 }, 1000);
 } else if (newGame.round === 2) {

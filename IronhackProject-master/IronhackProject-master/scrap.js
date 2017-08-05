@@ -99,6 +99,12 @@ MemoryGame.prototype.pushMatchedDivs = function (i) {
 newGame.pushMatchedDivs();
 
 //280
-MemoryGame.prototype.pointerOffAll = function () {
-  $(".eachCard.col-centered").addClass("blocked");
-};
+// MemoryGame.prototype.pointerOffAll = function () {
+//   $(".eachCard.col-centered").addClass("blocked");
+// };
+
+//362
+newGame.pointerOffAll();
+
+//378
+newGame.pointerOnAll()
