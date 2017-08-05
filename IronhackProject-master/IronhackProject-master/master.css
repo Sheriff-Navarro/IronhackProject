@@ -93,12 +93,13 @@ div.col-xs-12.cntr:hover{
 }
 #roundOver{
 position: relative;
-bottom: 500px;
+bottom: 550px;
 }
 
 
 #scrHd {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 #roundScoreCard {
@@ -120,4 +121,14 @@ bottom: 500px;
   color: white;*/
   font-size: 30px;
   margin-bottom: 25px;
+}
+
+#replay{
+  font-size: 30px;
+  text-align: center;
+  padding-top: 35px;
+}
+
+#replay:hover{
+  font-size: 40px;
 }

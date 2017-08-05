@@ -280,6 +280,39 @@ MemoryGame.prototype.hideP2Turn = function () {
 };
 var newGame = "";
 
+
+
+MemoryGame.prototype.showP1Score = function () {
+  $("#timeCard").removeClass("invisible");
+};
+
+MemoryGame.prototype.evaluateScores = function () {
+  if(newGame.player1score > newGame.player2score){
+    $("#start2").css("border", "none");
+    $("#start2").css("font-size", "40px");
+    $("#start2").html("PLAYER 1 WHOOPED THAT ASS!!!");
+    $("#replay").html('<span class="glyphicon glyphicon-repeat"></span>')
+    $("#start2:hover").css("pointer-events", "none");
+  } else if (newGame.player1score < newGame.player2score) {
+    $("#start2").css("border", "none");
+    $("#start2").css("font-size", "40px");
+    $("#start2").html("PLAYER 2 WHOOPED THAT ASS!!!")
+    $("#replay").html('<span class="glyphicon glyphicon-repeat"></span>')
+    $("#start2:hover").css("pointer-events", "none");
+  } else if (newGame.player1score === newGame.player2score) {
+    $("#start2").css("border", "none");
+    $("#start2").css("font-size", "40px");
+    $("#start2").html("You mothableepers tied, play again");
+    $("#replay").html('<span class="glyphicon glyphicon-repeat"></span>')
+    $("#start2:hover").css("pointer-events", "none");
+  }
+};
+
+MemoryGame.prototype.reloadPage = function () {
+  //restart game by reloading page
+  console.log("reload this mothableeper");
+  location.reload();
+};
 // ====================================================================
 
 
@@ -359,7 +392,8 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   newGame.showRoundOverCard();
   $(".scoreCard").addClass("invisible");
   newGame.p2Score();
-  newGame.hideP2Turn();
+  newGame.evaluateScores();
+  // newGame.hideP2Turn();
   }, 1000)
 
 }
@@ -378,10 +412,14 @@ $("#start2").on("click", function (){
   newGame.shuffle();
   $(".actualScore").html(newGame.gamePoints);
   newGame.hideRoundOverCard();
+  newGame.showP1Score();
   // newGame.showScoreCard();
-})
+;
 
 
+$("#replay").on("click", function(){
+  newGame.reloadPage();
+});
 
 
 
