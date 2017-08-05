@@ -22,6 +22,8 @@ function MemoryGame(){
   this.player1score = 0;
   this.player2score = 0;
   this.difficulty = "";
+  this.blockMatchedDivs = [];
+
   // this.createNewCardSet();
   }
 MemoryGame.prototype.createNewPair = function(){
@@ -260,7 +262,7 @@ MemoryGame.prototype.removeAllTiles = function () {
   } this.pairsNeeded = 10;
 } else if (this.difficulty === "hard") {
   this.unlockHardRows();
-  for (var i=0; i < 10; i++){
+  for (var i=0; i < 12; i++){
   this.createNewPair();
 } this.pairsNeeded = 12;
   };
@@ -312,6 +314,17 @@ MemoryGame.prototype.reloadPage = function () {
   //restart game by reloading page
   console.log("reload this mothableeper");
   location.reload();
+};
+
+MemoryGame.prototype.blockDivs = function () {
+  for (var i = 0; i < newGame.blockMatchedDivs.length; i++) {
+    $(this.blockMatchedDivs[i]).addClass("blocked");
+  }
+};
+
+MemoryGame.prototype.pushMatchedDivs = function (i) {
+  this.blockMatchedDivs.push(this.selectedDivs[0]);
+  this.blockMatchedDivs.push(this.selectedDivs[1]);
 };
 // ====================================================================
 
@@ -414,7 +427,7 @@ $("#start2").on("click", function (){
   newGame.hideRoundOverCard();
   newGame.showP1Score();
   // newGame.showScoreCard();
-;
+});
 
 
 $("#replay").on("click", function(){
