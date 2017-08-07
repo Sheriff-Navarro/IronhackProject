@@ -1,3 +1,66 @@
+// ========BODY GRADIENT===========================================
+
+var colors = new Array(
+  [62,35,255],
+  [60,255,60],
+  [255,35,98],
+  [45,175,230],
+  [255,0,255],
+  [255,128,0]);
+
+var step = 0;
+//color table indices for:
+// current color left
+// next color left
+// current color right
+// next color right
+var colorIndices = [0,1,2,3];
+
+//transition speed
+var gradientSpeed = 0.002;
+
+function updateGradient()
+{
+
+  if ( $===undefined ) return;
+
+var c0_0 = colors[colorIndices[0]];
+var c0_1 = colors[colorIndices[1]];
+var c1_0 = colors[colorIndices[2]];
+var c1_1 = colors[colorIndices[3]];
+
+var istep = 1 - step;
+var r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
+var g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
+var b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
+var color1 = "rgb("+r1+","+g1+","+b1+")";
+
+var r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
+var g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
+var b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
+var color2 = "rgb("+r2+","+g2+","+b2+")";
+
+ $('#gradient').css({
+   background: "-webkit-gradient(linear, left top, right top, from("+color1+"), to("+color2+"))"}).css({
+    background: "-moz-linear-gradient(left, "+color1+" 0%, "+color2+" 100%)"});
+
+  step += gradientSpeed;
+  if ( step >= 1 )
+  {
+    step %= 1;
+    colorIndices[0] = colorIndices[1];
+    colorIndices[2] = colorIndices[3];
+
+    //pick two new target color indices
+    //do not pick the same as the current one
+    colorIndices[1] = ( colorIndices[1] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
+    colorIndices[3] = ( colorIndices[3] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
+
+  }
+}
+setInterval(updateGradient,10);
+
+// ===================================================
 var gameDiv = document.getElementById("game");
 var gameRow = "<div class='container'>    <div class='container'><div class='row'><div class='col-xs-12 '><div class='col-xs-3 '><div id='tile1' class='eachCard col-centered'>#</div></div><div class='col-xs-3'> <div class='eachCard col-centered'> # </div></div>          <div class='col-xs-3'>            <div class='eachCard col-centered'>#</div></div>          <div class='col-xs-3'>            <div class='eachCard col-centered'>#</div>          </div>        </div>      </div>    </div>  </div>";
 
@@ -23,6 +86,7 @@ function MemoryGame(){
   this.player2score = 0;
   this.difficulty = "";
   this.blockMatchedDivs = [];
+  this.tripFaceClicks = 0;
 
   // this.createNewCardSet();
   }
@@ -147,7 +211,6 @@ MemoryGame.prototype.idToIndex = function(thy) {
   this.selectedDivs.push($(thy));
   // console.log(this.selectedDivs);
 };
-// =======================================================================
 
 MemoryGame.prototype.selectCards = function(thy) {
   var selectedId = $(thy).attr("id");
@@ -338,11 +401,43 @@ setTimeout(function(){
   newGame.pointerOnAll();
   newGame.blockDivs();
 },1000);
-
-
 };
-// ====================================================================
 
+MemoryGame.prototype.bounceScore = function () {
+console.log("bounceScores")
+  $("#points").addClass("animated bounce").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+    $(this).removeClass("animated bounce");
+});
+$(this.selectedDivs[0]).addClass("animated bounce").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+  $(this).removeClass("animated bounce");
+})
+$(this.selectedDivs[1]).addClass("animated bounce").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+  $(this).removeClass("animated bounce");
+})
+};
+
+MemoryGame.prototype.shakeTile = function () {
+  $(this.selectedDivs[0]).addClass("animated rubberBand").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+    $(this).removeClass("animated rubberBand");
+  })
+  $(this.selectedDivs[1]).addClass("animated rubberBand").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+    $(this).removeClass("animated rubberBand");
+  })
+};
+
+
+MemoryGame.prototype.tripFace = function () {
+  $("#start").html('CUT THAT ISH OUT  '+ '<span id="star" class="glyphicon glyphicon-star"></span>');
+  $("body").attr("id", "gradient");
+};
+
+MemoryGame.prototype.cutItOut = function () {
+  $("#start").html('TRIP FACE  '+ '<span id="star" class="glyphicon glyphicon-star-empty"></span>');
+  $("body").attr("id", "regular");
+};
+
+// ====================================================================
+// <span id="star" class="glyphicon glyphicon-star"></span>
 
 
 
@@ -376,23 +471,17 @@ $(".eachCard").on("click", function(){
 if(tileClicks === 2){
   if(newGame.selectedCards[0].color === newGame.selectedCards[1].color) {
     newGame.pushMatchedDivs();
-    // newGame.pointerOffAll();
-    // newGame.pushMatchedDivs();
-    // setTimeout(function(){
+    newGame.bounceScore();
     newGame.noThirdClicks();
     console.log("match");
     newGame.reduce(newGame.selectedCards[0].points, newGame.selectedCards[1].points);
-    // newGame.pointerOff(1);
     newGame.resetArrays();
     tileClicks = 0;
-    // newGame.pointerOnAll();
-    // newGame.blockDivs();
-    // pairsMatched +=1;
-    // },1000)
+
 }
 else if(newGame.selectedCards[0].color !== newGame.selectedCards[1].color){
   newGame.noThirdClicks();
-
+  newGame.shakeTile();
     // newGame.pointerOff(1);
   setTimeout(function(){
     // newGame.pointerOn(0);
@@ -458,6 +547,12 @@ $("#replay").on("click", function(){
   newGame.reloadPage();
 });
 
+
+$("#start").on("click", function(){
+  newGame.tripFaceClicks +=;
+  if (newGame.tripFaceClicks )
+  newGame.tripFace();
+});
 
 
 
