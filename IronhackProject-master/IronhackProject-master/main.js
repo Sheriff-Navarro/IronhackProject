@@ -434,6 +434,7 @@ MemoryGame.prototype.tripFace = function () {
 MemoryGame.prototype.cutItOut = function () {
   $("#start").html('TRIP FACE  '+ '<span id="star" class="glyphicon glyphicon-star-empty"></span>');
   $("body").attr("id", "regular");
+  $("body").attr("style", "");
 };
 
 // ====================================================================
@@ -549,10 +550,13 @@ $("#replay").on("click", function(){
 
 
 $("#start").on("click", function(){
-  newGame.tripFaceClicks +=;
-  if (newGame.tripFaceClicks )
-  newGame.tripFace();
-});
+  newGame.tripFaceClicks ++;
+  if (newGame.tripFaceClicks%2 != 0){
+    newGame.tripFace();
+  }else if (newGame.tripFaceClicks%2 === 0 ) {
+    newGame.cutItOut();
+  }
+  });
 
 
 
