@@ -152,15 +152,10 @@ MemoryGame.prototype.lockHard = function () {
   this.lockEasy();
   this.lockMedium();
   $("#hardGame6").addClass("invisible");
+};
 
-// MemoryGame.prototype.hideScoreCard = function () {
-//   $(".scoreCard").("invisible");
-// };
-//
-// MemoryGame.prototype.showScoreCard = function () {
-//   $(".scoreCard").addClass("invisible");
-// };
-
+MemoryGame.prototype.hideBrand = function () {
+  $("#brand").remove();
 };
 
 MemoryGame.prototype.whichDifficulty = function(that){
@@ -425,9 +420,30 @@ MemoryGame.prototype.shakeTile = function () {
   })
 };
 
+// MemoryGame.prototype.whichDiffAnimation = function () {
+//   if(newGame.difficulty==="easy"){
+//     $("#easy").addClass("animated flash").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+//       $(this).removeClass("animated flash");
+//     });
+//   } else if (newGame.difficulty==="medium") {
+//     $("#medium").addClass("animated flash").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+//       $(this).removeClass("animated flash");
+//     });
+//   } else if (newGame.difficulty==="hard") {
+//     $("#hard").addClass("animated flash").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+//       $(this).removeClass("animated flash");
+//     });
+//   }
+//
+// };
 
+MemoryGame.prototype.gameOverTaunt = function () {
+  $("#gameOver").addClass("animated jackInTheBox").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+    $(this).removeClass("animated jackInTheBox");
+});
+};
 MemoryGame.prototype.tripFace = function () {
-  $("#start").html('CUT THAT ISH OUT  '+ '<span id="star" class="glyphicon glyphicon-star"></span>');
+  $("#start").html('CUT THAT ISH OUT    '+ '<span id="star" class="glyphicon glyphicon-star"></span>');
   $("body").attr("id", "gradient");
 };
 
@@ -436,6 +452,19 @@ MemoryGame.prototype.cutItOut = function () {
   $("body").attr("id", "regular");
   $("body").attr("style", "");
 };
+
+MemoryGame.prototype.roundOverRollOut = function () {
+  $(".eachCard").addClass("animated rollOut").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+    $(this).removeClass("animated rollOut");
+});
+};
+
+MemoryGame.prototype.scoreCardHide = function () {
+  $(".scoreCard").addClass("animated rollOut").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+    $(this).removeClass("animated rollOut");
+});
+}
+
 
 // ====================================================================
 // <span id="star" class="glyphicon glyphicon-star"></span>
@@ -451,6 +480,8 @@ $("div.col-xs-12.cntr").on("click", function(){
   if (click === 1) {
   var that = this;
   newGame = new MemoryGame;
+  newGame.hideBrand();
+  // newGame.whichDiffAnimation();
   newGame.whichDifficulty(that);
   newGame.shuffle();
   $(".actualScore").html(newGame.gamePoints);
@@ -499,6 +530,8 @@ else if(newGame.selectedCards[0].color !== newGame.selectedCards[1].color){
 
 if (newGame.pairsMatched === newGame.pairsNeeded){
   if (newGame.round === 1){
+  newGame.roundOverRollOut();
+  newGame.scoreCardHide();
   setTimeout(function(){
   // newGame.hideScoreCard()
   newGame.roundOneDone();
@@ -508,11 +541,14 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   newGame.showRoundOverCard();
   newGame.p1Score();
   newGame.blockMatchedDivs = [];
-  alert("FINALLY! You're score is " + newGame.player1score);
+  // alert("FINALLY! You're score is " + newGame.player1score);
 }, 1000);
 } else if (newGame.round === 2) {
+  newGame.roundOverRollOut();
+  newGame.scoreCardHide();
   setTimeout(function(){
   // newGame.hideScoreCard();
+  $("#start2").css("pointer-events", "none");
   newGame.pushScoreToPlayer();
   newGame.removeAllTiles();
   newGame.resetTileNum();
@@ -520,8 +556,12 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   $(".scoreCard").addClass("invisible");
   newGame.p2Score();
   newGame.evaluateScores();
+  // $("#gameOver").addClass("animated jackInTheBox");
   // newGame.hideP2Turn();
   }, 1000)
+  setTimeout(function(){
+    newGame.gameOverTaunt();
+  }, 2000)
 
 }
 };
