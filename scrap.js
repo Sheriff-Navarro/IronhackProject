@@ -64,3 +64,47 @@
 //   var pointsIndex = selectedPoints
 //
 // };
+
+
+MemoryGame.prototype.pointerOffAll = function () {
+  $(".eachCard.col-centered").addClass("blocked");
+};
+
+//362
+newGame.pointerOffAll();
+
+
+// set-timeout  if tile clicks ===2
+
+
+MemoryGame.prototype.pushMatchedDivs = function (i) {
+  this.blockMatchedDivs.push(this.selectedDivs[0]);
+  this.blockMatchedDivs.push(this.selectedDivs[1]);
+};
+
+// MemoryGame.prototype.blockDivs = function () {
+//   for (var i = 0; i < newGame.blockMatchedDivs.length; i++) {
+//     $(this.blockMatchedDivs[i]).addClass("blocked");
+//   }
+// };
+
+
+
+
+// MemoryGame proto newGame
+// this.blockMatchedDivs = [];
+//
+============================
+//373
+newGame.pushMatchedDivs();
+
+//280
+// MemoryGame.prototype.pointerOffAll = function () {
+//   $(".eachCard.col-centered").addClass("blocked");
+// };
+
+//362
+newGame.pointerOffAll();
+
+//378
+newGame.pointerOnAll()

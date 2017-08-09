@@ -155,12 +155,21 @@ MemoryGame.prototype.lockHard = function () {
 };
 
 MemoryGame.prototype.hideBrand = function () {
+  $("#brand").addClass("animated fadeOutUp").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+  $("#brand").removeClass("animated fadeOutUp");
+});
+  setTimeout(function(){
   $("#brand").remove();
+}, 700);
+
 };
 
 MemoryGame.prototype.whichDifficulty = function(that){
 
   if ($(that).attr("id") === "easy"){
+  //   $("#easy").addClass("animated fadeOutUp").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+  //   $("#easy").removeClass("animated fadeOutUp");
+  // });
     // console.log("easy");
     this.unlockEasyRows();
     for (var i = 0; i < 6; i ++ ){
@@ -423,22 +432,40 @@ MemoryGame.prototype.shakeTile = function () {
   })
 };
 
-// MemoryGame.prototype.whichDiffAnimation = function () {
-//   if(newGame.difficulty==="easy"){
-//     $("#easy").addClass("animated flash").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-//       $(this).removeClass("animated flash");
-//     });
-//   } else if (newGame.difficulty==="medium") {
-//     $("#medium").addClass("animated flash").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-//       $(this).removeClass("animated flash");
-//     });
-//   } else if (newGame.difficulty==="hard") {
-//     $("#hard").addClass("animated flash").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-//       $(this).removeClass("animated flash");
-//     });
-//   }
-//
-// };
+MemoryGame.prototype.whichDiffAnimation = function (that) {
+  if($(that).attr("id") === "easy"){
+    $("#easy").addClass("animated tada").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $("easy").removeClass("animated tada");
+    });
+    $("#medium").addClass("animated flipOutX").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $("#medium").removeClass("animated fadeOut");
+    });
+    $("#hard").addClass("animated flipOutX").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $("#hard").removeClass("animated flipOutX");
+    });
+  } else if ($(that).attr("id") === "medium") {
+    $("#medium").addClass("animated tada").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $("#medium").removeClass("animated tada");
+    });
+    $("#easy").addClass("animated flipOutX").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $("#easy").removeClass("animated flipOutX");
+    });
+    $("#hard").addClass("animated flipOutX").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $("#hard").removeClass("animated flipOutX");
+    });
+  } else if ($(that).attr("id") === "hard") {
+    $("#hard").addClass("animated tada").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $("#hard").removeClass("animated tada");
+    });
+    $("#medium").addClass("animated flipOutX").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $("#medium").removeClass("animated flipOutX");
+    });
+    $("#easy").addClass("animated flipOutX").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      $("#easy").removeClass("animated flipOutX");
+    });
+  }
+
+};
 
 MemoryGame.prototype.gameOverTaunt = function () {
   $("#gameOver").addClass("animated zoomInDown").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
@@ -468,6 +495,13 @@ MemoryGame.prototype.scoreCardHide = function () {
 });
 }
 
+ function removeDiffButtClass() {
+   setTimeout(function(){
+  $("#easy").removeClass("animated zoomIn");
+  $("#medium").removeClass("animated zoomIn");
+  $("#hard").removeClass("animated zoomIn");
+}, 1000);
+};
 
 // ====================================================================
 // <span id="star" class="glyphicon glyphicon-star"></span>
@@ -475,7 +509,7 @@ MemoryGame.prototype.scoreCardHide = function () {
 
 
 $(document).ready(function(){
-
+removeDiffButtClass();
 var click = 0;
 // =====================NEW GAME START=================================================
 $("div.col-xs-12.cntr").on("click", function(){
@@ -484,11 +518,12 @@ $("div.col-xs-12.cntr").on("click", function(){
   var that = this;
   newGame = new MemoryGame;
   newGame.hideBrand();
-  // newGame.whichDiffAnimation();
+  newGame.whichDiffAnimation(that);
+  setTimeout(function(){
   newGame.whichDifficulty(that);
   newGame.shuffle();
   $(".actualScore").html(newGame.gamePoints);
-
+}, 700);
 } else if (click > 1) {
   // console.log("something");
 };
@@ -533,6 +568,7 @@ else if(newGame.selectedCards[0].color !== newGame.selectedCards[1].color){
 
 if (newGame.pairsMatched === newGame.pairsNeeded){
   if (newGame.round === 1){
+  newGame.cutItOut();
   newGame.roundOverRollOut();
   newGame.scoreCardHide();
   setTimeout(function(){
@@ -547,6 +583,7 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   // alert("FINALLY! You're score is " + newGame.player1score);
 }, 900);
 } else if (newGame.round === 2) {
+  newGame.cutItOut();
   newGame.roundOverRollOut();
   newGame.scoreCardHide();
   setTimeout(function(){
