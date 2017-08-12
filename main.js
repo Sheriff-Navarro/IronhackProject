@@ -95,6 +95,10 @@ function MemoryGame(){
   this.difficulty = "";
   this.blockMatchedDivs = [];
   this.tripFaceClicks = 0;
+  this.lastColor = "";
+  this.lastClickedIndex = 0;
+  this.colorEvalClicks = 0;
+  this.hinterBoolean = false;
 
   // this.createNewCardSet();
   }
@@ -241,6 +245,7 @@ MemoryGame.prototype.idToIndex = function(thy) {
   var array = thisId.split("tile");
   var index = array[1];
   var indexToNum = Number(index);
+  this.lastClickedIndex = indexToNum;
   $(thy).css("background", newGame.gameCards[indexToNum].color);
   this.selectedDivs.push($(thy));
   // console.log(this.selectedDivs);
@@ -525,9 +530,45 @@ MemoryGame.prototype.scoreCardHide = function () {
 });
 }
 
-MemoryGame.prototype.toolTip = function (thy) {
-  $("#colorE").attr("title", $(thy).css("background-color"));
+
+
+MemoryGame.prototype.hexColor = function () {
+newGame.lastColor = newGame.gameCards[newGame.lastClickedIndex].color;
 };
+
+
+MemoryGame.prototype.resetEye = function () {
+  $("#replaceW_Color").html('<span id="colorE" class="glyphicon glyphicon-eye-open" data-toggle="tooltip" data-placement="bottom" title="Click to show/hide color."></span>');
+};
+
+
+
+MemoryGame.prototype.changeHinter = function () {
+  if (newGame.hinterBoolean === true){
+    newGame.hinterBoolean = false;
+    newGame.resetEye();
+  } else if (newGame.hinterBoolean === false) {
+    newGame.hinterBoolean = true;
+    this.hexColor();
+    $("#replaceW_Color").html(newGame.lastColor);
+    $("#replaceW_Color").addClass("animated flipInX").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+    $(this).removeClass("animated flipInX");
+  });
+};
+}
+
+MemoryGame.prototype.hinterColorChanged = function () {
+  if (newGame.hinterBoolean === true){
+  this.hexColor();
+  $("#replaceW_Color").html(newGame.lastColor);
+  $("#replaceW_Color").addClass("animated flipInX").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+  $(this).removeClass("animated flipInX");
+})
+} else if (newGame.hinterBoolean === false) {
+  newGame.resetEye();
+}
+};
+
 
 
  function removeDiffButtClass() {
@@ -566,6 +607,8 @@ $("div.col-xs-12.cntr").on("click", function(){
 // ==================NEW GAME========================================================
 var tileClicks = 0
 
+
+
 $(".eachCard").on("click", function(){
   // console.log("eachCard");
   tileClicks = tileClicks + 1;
@@ -573,7 +616,10 @@ $(".eachCard").on("click", function(){
   newGame.idToIndex(thy);
   newGame.selectCards(thy);
   newGame.pointerOff(0);
-  newGame.toolTip(thy);
+  newGame.hexColor();
+  // newGame.changeHinter();
+  newGame.hinterColorChanged();
+  // newGame.toolTip(thy);
 if(tileClicks === 2){
   if(newGame.selectedCards[0].color === newGame.selectedCards[1].color) {
     newGame.pushMatchedDivs();
@@ -588,15 +634,12 @@ if(tileClicks === 2){
 else if(newGame.selectedCards[0].color !== newGame.selectedCards[1].color){
   newGame.noThirdClicks();
   newGame.shakeTile();
-    // newGame.pointerOff(1);
   setTimeout(function(){
-    // newGame.pointerOn(0);
-    // newGame.pointerOn(1);
     newGame.clearTileColor();
     newGame.subtractPoint();
     newGame.resetArrays();
     tileClicks = 0;
-  }, 1000)
+  }, 950)
 };
 
 
@@ -616,14 +659,12 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   newGame.showRoundOverCard();
   newGame.p1Score();
   newGame.blockMatchedDivs = [];
-  // alert("FINALLY! You're score is " + newGame.player1score);
-}, 900);
+}, 975);
 } else if (newGame.round === 2) {
   newGame.cutItOut();
   newGame.roundOverRollOut();
   newGame.scoreCardHide();
   setTimeout(function(){
-  // newGame.hideScoreCard();
   $("#start2").css("pointer-events", "none");
   newGame.pushScoreToPlayer();
   newGame.removeAllTiles();
@@ -633,13 +674,7 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   newGame.p2Score();
   newGame.evaluateScores();
   newGame.gameOverTaunt();
-}, 900)
-
-
-  // setTimeout(function(){
-  //   newGame.gameOverTaunt();
-  // }, 2000)
-
+}, 975)
 }
 };
 
@@ -649,7 +684,7 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
 
 $("#start2").on("click", function (){
   // $(".scoreCard").removeClass("invisible");
-
+  newGame.resetEye();
   newGame.gameCards = [];
   console.log("1==========="+ newGame.gameCards);
   newGame.round2Diff();
@@ -682,6 +717,21 @@ $("#start").on("click", function(){
   }
   });
 
+$("#colorEvaluator").on("click", function(){
+  if (newGame.lastColor === ""){
+    $("#replaceW_Color").html("Pick a tile!");
+    setTimeout(function(){
+    $("#replaceW_Color").html('<span id="colorE" class="glyphicon glyphicon-eye-open" data-toggle="tooltip" data-placement="bottom" title="Click to show/hide color."></span>');
+  }, 1000)
+  } else {
+    newGame.changeHinter();
+  }
+
+});
+
+
+
+// on click if boolean === true then make boolean false and change html to glyphicon-eye-open
 
 
 
@@ -691,8 +741,7 @@ $("#start").on("click", function(){
 
 
 
-
-
+// if no color has been selected do not change the clicker
 
 
 

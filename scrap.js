@@ -108,3 +108,15 @@ newGame.pointerOffAll();
 
 //378
 newGame.pointerOnAll()
+
+
+
+$("#colorEvaluator").on("click", function(){
+  if (newGame.colorEvalClicks === 0){
+    $("#replaceW_Color").html("Click a color, then here!");
+    newGame.colorEvalClicks = newGame.colorEvalClicks + 1;
+  } else if (newGame.colorEvalClicks > 1)
+  newGame.colorEvalClicks = newGame.colorEvalClicks + 1;
+  $("#replaceW_Color").addClass("animated flipInX");
+  $("#replaceW_Color").html(newGame.lastColor);
+});
