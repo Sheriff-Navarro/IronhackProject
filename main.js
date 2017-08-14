@@ -663,12 +663,12 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   newGame.cutItOut();
   newGame.roundOverRollOut();
   newGame.scoreCardHide();
+  $(".scoreCard").addClass("invisible");
   setTimeout(function(){
   // newGame.hideScoreCard()
   newGame.roundOneDone();
   newGame.removeAllTiles();
   newGame.resetTileNum();
-  $(".scoreCard").addClass("invisible");
   newGame.showRoundOverCard();
   newGame.p1Score();
   newGame.blockMatchedDivs = [];
@@ -677,13 +677,13 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   newGame.cutItOut();
   newGame.roundOverRollOut();
   newGame.scoreCardHide();
+  $(".scoreCard").addClass("invisible");
   setTimeout(function(){
   $("#start2").css("pointer-events", "none");
   newGame.pushScoreToPlayer();
   newGame.removeAllTiles();
   newGame.resetTileNum();
   newGame.showRoundOverCard();
-  $(".scoreCard").addClass("invisible");
   newGame.p2Score();
   newGame.evaluateScores();
   newGame.gameOverTaunt();
