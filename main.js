@@ -659,7 +659,7 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   newGame.showRoundOverCard();
   newGame.p1Score();
   newGame.blockMatchedDivs = [];
-}, 975);
+}, 800);
 } else if (newGame.round === 2) {
   newGame.cutItOut();
   newGame.roundOverRollOut();
@@ -674,7 +674,7 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   newGame.p2Score();
   newGame.evaluateScores();
   newGame.gameOverTaunt();
-}, 975)
+}, 800)
 }
 };
 

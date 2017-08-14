@@ -120,3 +120,35 @@ $("#colorEvaluator").on("click", function(){
   $("#replaceW_Color").addClass("animated flipInX");
   $("#replaceW_Color").html(newGame.lastColor);
 });
+
+
+
+
+MemoryGame.prototype.changeHinter = function () {
+  if (newGame.hinterBoolean === true){
+    newGame.hinterBoolean = false;
+    newGame.resetEye();
+  } else if (newGame.hinterBoolean === false) {
+    newGame.hinterBoolean = true;
+    $("#replaceW_Color").html(newGame.lastColor = newGame.gameCards[newGame.lastClickedIndex].color);
+  }
+};
+
+
+$("#colorEvaluator").on("click", function(){
+  console.log("color eval click");
+  newGame.changeHinter();
+});
+
+
+MemoryGame.prototype.hinterColorChanged = function () {
+  if (newGame.hinterBoolean === true){
+  this.hexColor();
+  $("#replaceW_Color").html(newGame.lastColor);
+  $("#replaceW_Color").addClass("animated flipInX").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+  $(this).removeClass("animated flipInX");
+})
+} else if (newGame.hinterBoolean === false) {
+  newGame.resetEye();
+}
+};
