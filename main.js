@@ -541,6 +541,9 @@ MemoryGame.prototype.resetEye = function () {
   $("#replaceW_Color").html('<span id="colorE" class="glyphicon glyphicon-eye-open" data-toggle="tooltip" data-placement="bottom" title="Click to show/hide color."></span>');
 };
 
+MemoryGame.prototype.resetLastColor = function () {
+  newGame.lastcolor = "";
+};
 
 
 MemoryGame.prototype.changeHinter = function () {
@@ -567,6 +570,14 @@ MemoryGame.prototype.hinterColorChanged = function () {
 } else if (newGame.hinterBoolean === false) {
   newGame.resetEye();
 }
+};
+
+MemoryGame.prototype.shakeSound = function () {
+  $("#shakeSound")[0].play();
+};
+
+MemoryGame.prototype.dingSound = function () {
+  $("#dingSound")[0].play();
 };
 
 
@@ -625,6 +636,7 @@ if(tileClicks === 2){
     newGame.pushMatchedDivs();
     newGame.bounceScore();
     newGame.noThirdClicks();
+    newGame.dingSound();
     console.log("match");
     newGame.reduce(newGame.selectedCards[0].points, newGame.selectedCards[1].points);
     newGame.resetArrays();
@@ -634,6 +646,7 @@ if(tileClicks === 2){
 else if(newGame.selectedCards[0].color !== newGame.selectedCards[1].color){
   newGame.noThirdClicks();
   newGame.shakeTile();
+  newGame.shakeSound();
   setTimeout(function(){
     newGame.clearTileColor();
     newGame.subtractPoint();
@@ -685,6 +698,7 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
 $("#start2").on("click", function (){
   // $(".scoreCard").removeClass("invisible");
   newGame.resetEye();
+  newGame.resetLastColor();
   newGame.gameCards = [];
   console.log("1==========="+ newGame.gameCards);
   newGame.round2Diff();
