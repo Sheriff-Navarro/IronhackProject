@@ -19,6 +19,7 @@
 }
 
 #gradient{
+  background: no-repeat;
   width: 100%;
   height: 800px;
   padding: 0px;
@@ -38,7 +39,7 @@
 }*/
 
 .col-xs-3{
-text-align: center;;
+text-align: center;
 margin-bottom: 15px 0;
 padding: 0;
 }
@@ -54,6 +55,8 @@ margin: 5px;
 padding: 25px 0px;
 font-size: 20px;
 font-weight: bold;
+/*text-shadow: .2px 0 0 #000, 0 -.2px 0 #000, 0 1px 0 #000, -.2px 0 0 #000;*/
+
 /*height: 150px;*/
 }
 
@@ -199,20 +202,7 @@ a {
   color: white;
 }
 /*================MEDIA QUERIES====================*/
-@media screen and (max-width: 750px){
 
-  body{
-    background-color: black;
-  }
-  .eachCard {
-  /*border: 2px solid rgba(255,255,255, .5);
-  margin: 5px;
-  padding: 25px 0px;
-  font-size: 20px;*/
-  font-weight: bold;
-  height: 50px;
-  }
-}
 
 
 
@@ -262,3 +252,88 @@ table {
 	border-spacing: 0;
 }
 /*===================================*/
+
+@media screen and (max-width: 600px){
+
+  /*#regular{
+    background: black;
+  }*/
+  .eachCard {
+  border: 2px solid rgba(255,255,255, .5);
+  margin: 5px;
+  padding: 25px 0px;
+  font-size: 20px;
+  font-weight: bold;
+  height: 115px;
+  }
+
+.cntr{
+  color: white ;
+  text-align: center;
+  border: 2px solid rgba(255,255,255, .5);
+  padding: 20px 0px;
+  font-size: 18px;
+}
+
+#points, #timeCard{
+  position: relative;
+  top: 30px;
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 15px 0;
+  padding: 0;
+}
+
+#timeCard{
+  position: relative;
+  right: 20px;
+}
+
+#colorEvaluator, #colorE, #replaceW_Color {
+  position: relative;
+  top:10px;
+  right: 12px;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px 0;
+  padding: 0;
+}
+
+
+#replaceW_Color {
+  position: relative;
+  bottom: 10px;
+}
+
+.eachCard{
+padding-top: 20px;
+}
+
+#roundOver {
+  position: relative;
+  bottom: 720px;
+  /*top: 225px;*/
+}
+
+#scrHd {
+  text-align: center;
+  margin-bottom: 45px;
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+#plyrScore{
+  font-size: 35px;
+  margin: 10px 10px 20px 10px;
+}
+
+#start2{
+  font-size: 25px;
+}
+
+
+#gameOver, #repeat{
+  font-size: 20px;
+}
+
+}

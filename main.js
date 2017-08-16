@@ -12,7 +12,7 @@ var colors = new Array(
   [62,35,255],
   [60,255,60],
   [255,35,98],
-  [45,175,230],
+  [0,0,255],
   [255,0,255],
   [255,128,0]);
 
@@ -25,7 +25,7 @@ var step = 0;
 var colorIndices = [0,1,2,3];
 
 //transition speed
-var gradientSpeed = 0.002;
+var gradientSpeed = 0.001;
 
 function updateGradient()
 {
@@ -100,7 +100,6 @@ function MemoryGame(){
   this.colorEvalClicks = 0;
   this.hinterBoolean = false;
 
-  // this.createNewCardSet();
   }
 MemoryGame.prototype.createNewPair = function(){
   var letters = '0123456789ABCDEF';
@@ -197,28 +196,21 @@ MemoryGame.prototype.hideBrand = function () {
 MemoryGame.prototype.whichDifficulty = function(that){
 
   if ($(that).attr("id") === "easy"){
-  //   $("#easy").addClass("animated fadeOutUp").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-  //   $("#easy").removeClass("animated fadeOutUp");
-  // });
-    // console.log("easy");
     this.unlockEasyRows();
     for (var i = 0; i < 6; i ++ ){
       this.createNewPair();
     }
     this.pairsNeeded = 6;
     this.difficulty = "easy";
-    // console.log(this.gameCards)
-    // console.log(this.difficulty);
+
   }
    else if ($(that).attr("id") === "medium"){
-    // console.log("medium");
     this.unlockMediumRows();
   for (var i = 0; i < 10; i ++ ){
     this.createNewPair();
   }
   this.pairsNeeded = 10;
   this.difficulty = "medium";
-  // console.log(this.difficulty);
 } else if ($(that).attr("id")==="hard") {
     // console.log("hard");
     this.unlockHardRows();
@@ -227,8 +219,6 @@ MemoryGame.prototype.whichDifficulty = function(that){
   }
   this.pairsNeeded = 12;
   this.difficulty = "hard";
-  // console.log(this.gameCards)
-  // console.log(this.difficulty);
 }
 $("#diff").remove();
 setTimeout(function(){
@@ -241,14 +231,12 @@ $("#scoreCard").removeClass("animated rotateInDownLeft");
 // ========SETS DIV COLOR TO COLOR OF ITEM IN INDEX====
 MemoryGame.prototype.idToIndex = function(thy) {
   var thisId = $(thy).attr("id");
-  // console.log(thisId);
   var array = thisId.split("tile");
   var index = array[1];
   var indexToNum = Number(index);
   this.lastClickedIndex = indexToNum;
   $(thy).css("background", newGame.gameCards[indexToNum].color);
   this.selectedDivs.push($(thy));
-  // console.log(this.selectedDivs);
 };
 
 MemoryGame.prototype.selectCards = function(thy) {
@@ -256,11 +244,7 @@ MemoryGame.prototype.selectCards = function(thy) {
   var selectedIdArray = selectedId.split("tile");
   var selectedIndex = selectedIdArray[1];
   this.selectedCards.push(newGame.gameCards[selectedIndex]);
-  // console.log(this.selectedCards);
   this.selectedPoints.push(newGame.gameCards[selectedIndex].points);
-  // console.log(this.selectedPoints);
-  // $(this.selectedDivs[0]).addClass("selected");
-  // $(this.selectedDivs[1]).addClass("selected");
 
 };
 
@@ -270,7 +254,6 @@ this.gamePoints = this.selectedPoints.reduce(function(a,b){
 }, this.gamePoints);
 $(".actualScore").html(this.gamePoints);
 this.pairsMatched = this.pairsMatched + 1;
-// console.log(this.pairsMatched);
 };
 
 MemoryGame.prototype.subtractPoint = function () {
@@ -280,8 +263,6 @@ MemoryGame.prototype.subtractPoint = function () {
     $(this.selectedDivs[1]).html(this.selectedCards[1].points);
 };
 MemoryGame.prototype.clearTileColor = function () {
-  // $(this.selectedDivs[0]).effect("shake");
-  // $(this.selectedDivs[1]).effect("shake");
   $(this.selectedDivs[0]).css("background-color", "");
   $(this.selectedDivs[1]).css("background-color", "");
 };
@@ -420,7 +401,6 @@ MemoryGame.prototype.evaluateScores = function () {
 };
 
 MemoryGame.prototype.reloadPage = function () {
-  //restart game by reloading page
   console.log("reload this mothableeper");
   location.reload();
 };
@@ -508,12 +488,12 @@ MemoryGame.prototype.gameOverTaunt = function () {
 });
 };
 MemoryGame.prototype.tripFace = function () {
-  $("#start").html('CUT THAT ISH OUT    '+ '<span id="star" class="glyphicon glyphicon-star"></span>');
+  $("#start").html('CUT THAT ISH OUT    '+ '<span id="star" class="glyphicon glyphicon-star-empty"></span>');
   $("body").attr("id", "gradient");
 };
 
 MemoryGame.prototype.cutItOut = function () {
-  $("#start").html('TRIP FACE  '+ '<span id="star" class="glyphicon glyphicon-star-empty"></span>');
+  $("#start").html('TRIP FACE  '+ '<span id="star" class="glyphicon glyphicon-star"></span>');
   $("body").attr("id", "regular");
   $("body").attr("style", "");
 };
@@ -591,7 +571,6 @@ MemoryGame.prototype.dingSound = function () {
 };
 
 // ====================================================================
-// <span id="star" class="glyphicon glyphicon-star"></span>
 
 
 
@@ -612,7 +591,6 @@ $("div.col-xs-12.cntr").on("click", function(){
   $(".actualScore").html(newGame.gamePoints);
 }, 700);
 } else if (click > 1) {
-  // console.log("something");
 };
 })
 // ==================NEW GAME========================================================
@@ -628,9 +606,7 @@ $(".eachCard").on("click", function(){
   newGame.selectCards(thy);
   newGame.pointerOff(0);
   newGame.hexColor();
-  // newGame.changeHinter();
   newGame.hinterColorChanged();
-  // newGame.toolTip(thy);
 if(tileClicks === 2){
   if(newGame.selectedCards[0].color === newGame.selectedCards[1].color) {
     newGame.pushMatchedDivs();
@@ -665,7 +641,6 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   newGame.scoreCardHide();
   $(".scoreCard").addClass("invisible");
   setTimeout(function(){
-  // newGame.hideScoreCard()
   newGame.roundOneDone();
   newGame.removeAllTiles();
   newGame.resetTileNum();
@@ -696,7 +671,6 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
 });
 
 $("#start2").on("click", function (){
-  // $(".scoreCard").removeClass("invisible");
   newGame.resetEye();
   newGame.resetLastColor();
   newGame.gameCards = [];
@@ -713,7 +687,6 @@ $("#start2").on("click", function (){
   $("#scoreCard").removeClass("animated rotateInDownLeft");
   });
   }, 600);
-  // newGame.showScoreCard();
 });
 
 
@@ -745,7 +718,6 @@ $("#colorEvaluator").on("click", function(){
 
 
 
-// on click if boolean === true then make boolean false and change html to glyphicon-eye-open
 
 
 
@@ -755,7 +727,6 @@ $("#colorEvaluator").on("click", function(){
 
 
 
-// if no color has been selected do not change the clicker
 
 
 
