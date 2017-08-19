@@ -152,3 +152,10 @@ MemoryGame.prototype.hinterColorChanged = function () {
   newGame.resetEye();
 }
 };
+
+
+
+
+MemoryGame.prototype.flyBySound = function () {
+  $("#flybySound")[0].play();
+};

@@ -193,6 +193,12 @@ MemoryGame.prototype.hideBrand = function () {
 
 };
 
+MemoryGame.prototype.doorClose = function () {
+  setTimeout(function(){
+    $("#doorCloseSound")[0].play();
+},550);
+};
+
 MemoryGame.prototype.whichDifficulty = function(that){
 
   if ($(that).attr("id") === "easy"){
@@ -226,6 +232,7 @@ $(".scoreCard").removeClass("invisible");
 $("#scoreCard").addClass("animated rotateInDownLeft").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
 $("#scoreCard").removeClass("animated rotateInDownLeft");
 });
+newGame.doorClose();
 }, 600);
 };
 // ========SETS DIV COLOR TO COLOR OF ITEM IN INDEX====
@@ -482,20 +489,31 @@ MemoryGame.prototype.whichDiffAnimation = function (that) {
 
 };
 
+MemoryGame.prototype.hornStabSound = function () {
+  $("#hornStabSound")[0].play();
+};
+
 MemoryGame.prototype.gameOverTaunt = function () {
+  setTimeout(function(){
   $("#gameOver").addClass("animated zoomInDown").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
     $("#gameOver").removeClass("animated zoomInDown");
 });
+  newGame.hornStabSound();
+}, 200);
 };
+
+
 MemoryGame.prototype.tripFace = function () {
   $("#start").html('CUT THAT ISH OUT    '+ '<span id="star" class="glyphicon glyphicon-star-empty"></span>');
   $("body").attr("id", "gradient");
+  $("#tripFaceMusic")[0].play();
 };
 
 MemoryGame.prototype.cutItOut = function () {
   $("#start").html('TRIP FACE  '+ '<span id="star" class="glyphicon glyphicon-star"></span>');
   $("body").attr("id", "regular");
   $("body").attr("style", "");
+  $("#tripFaceMusic")[0].pause();
 };
 
 MemoryGame.prototype.roundOverRollOut = function () {
@@ -560,6 +578,23 @@ MemoryGame.prototype.dingSound = function () {
   $("#dingSound")[0].play();
 };
 
+MemoryGame.prototype.tadaEntrance = function () {
+  $("#tadaSound")[0].play();
+};
+
+MemoryGame.prototype.doorHinge = function () {
+  $("#doorHingeSound")[0].play();
+};
+
+MemoryGame.prototype.flyBySound = function () {
+  setTimeout(function(){
+  $("#flybySound")[0].play();
+}, 350);
+};
+
+// function door(){
+//   $("#doorHingeSound")[0].play();
+// }
 
 
  function removeDiffButtClass() {
@@ -576,6 +611,8 @@ MemoryGame.prototype.dingSound = function () {
 
 $(document).ready(function(){
 removeDiffButtClass();
+// door();
+// tadaEntrance();
 var click = 0;
 // =====================NEW GAME START=================================================
 $("div.col-xs-12.cntr").on("click", function(){
@@ -585,8 +622,10 @@ $("div.col-xs-12.cntr").on("click", function(){
   newGame = new MemoryGame;
   newGame.hideBrand();
   newGame.whichDiffAnimation(that);
+  newGame.tadaEntrance();
   setTimeout(function(){
   newGame.whichDifficulty(that);
+  newGame.doorHinge();
   newGame.shuffle();
   $(".actualScore").html(newGame.gamePoints);
 }, 700);
@@ -662,6 +701,7 @@ if (newGame.pairsMatched === newGame.pairsNeeded){
   newGame.p2Score();
   newGame.evaluateScores();
   newGame.gameOverTaunt();
+  newGame.flyBySound();
 }, 800)
 }
 };
@@ -686,6 +726,8 @@ $("#start2").on("click", function (){
   $("#scoreCard").addClass("animated rotateInDownLeft").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
   $("#scoreCard").removeClass("animated rotateInDownLeft");
   });
+  newGame.doorHinge();
+  newGame.doorClose();
   }, 600);
 });
 
